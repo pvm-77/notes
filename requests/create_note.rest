@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:3002
+
+# @name login
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username":"ravi297",
+    "password":"somepassword"
+}
+
+###
+
+@authToken = {{login.response.body.token}}
+
+###
+
+GET {{baseUrl}}/api/notes
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{baseUrl}}/api/notes
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "content":"eid pe dobara pe ghar jana hai",
+    "important":false 
+}
+
+###
+
+DELETE {{baseUrl}}/api/notes/6347e29f6f9d6f3fc1dc688b
+Authorization: Bearer {{authToken}}
